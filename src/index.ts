@@ -7,6 +7,7 @@ import packageRouter from './routes/package';
 import roleRouter from './routes/role';
 import accountRouter from './routes/account';
 import { corsMiddleware } from './cors';
+import connectionRouter from './routes/connection';
 
 
 
@@ -19,9 +20,10 @@ app.use(bodyParser.json());
 
 // routes
 app.use("/access", accessRouter);
+app.use("/api/connection", connectionRouter);
 app.use("/api/user", userRouter)
-app.use("/packages", packageRouter)
-app.use("/roles", roleRouter)
+app.use("/api/package", packageRouter)
+app.use("/api/role", roleRouter)
 app.use("/api/account" , accountRouter)
 
 // Sample user data (you can replace this with your database)

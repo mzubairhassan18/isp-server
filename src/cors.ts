@@ -2,7 +2,7 @@ import cors from 'cors';
 import { RequestHandler } from 'express';
 
 // Define a list of allowed origins for CORS
-const allowedOrigins = ['http://localhost:3002', 'https://yourfrontendapp.com'];
+const allowedOrigins = ['http://localhost:3001'];
 
 // CORS middleware
 export const corsMiddleware: RequestHandler = (req, res, next) => {

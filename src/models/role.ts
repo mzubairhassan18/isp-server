@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export interface Role {
   id: string;
   name: string;
-  permissions: string;
+  permissions: string[];
 }
 
 
@@ -35,13 +35,14 @@ export async function getRole(connection: mysql.PoolConnection, roleId: number):
   return null;
 }
 
-export async function createRole(connection: mysql.PoolConnection, roleData: Role): Promise<number> {
+export async function createRole(connection: mysql.PoolConnection, roleData: Role): Promise<Role> {
   const uniqueId = uuidv4();
+  const permissions = roleData.permissions.join(";");
   const [result] = await connection.query(
     `INSERT INTO roles (id, name, permissions) VALUES (?, ?, ?)`,
-    [uniqueId, roleData.name, roleData.permissions]
+    [uniqueId, roleData.name, permissions]
   );
-  return (result as mysql.OkPacket).insertId;
+  return {...roleData, id: uniqueId};
 }
 
 export async function updateRole(connection: mysql.PoolConnection, roleId: number, roleData: Role): Promise<void> {

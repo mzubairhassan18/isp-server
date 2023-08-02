@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
 import { getConnection } from "../database";
-import { Package, createPackage, getPackages } from "../models/package";
+import { Connection, createConnection, getConnections } from "../models/connection";
 
 const express = require('express');
-const packageRouter = express.Router();
+const connectionRouter = express.Router();
 
-packageRouter.get("/getPackages", async (req: Request, res: Response) => {
+connectionRouter.get("/getConnections", async (req: Request, res: Response) => {
   try {
     const connection = await getConnection();
 
     try {
-      const packages = await getPackages(connection);
-      console.log("packages", packages);
-      return res.status(200).json(packages);
+      const connections = await getConnections(connection);
+      console.log("connections", connections);
+      return res.status(200).json(connections);
     } catch (error) {
       console.error('Error executing query:', error);
     } finally {
@@ -26,15 +26,15 @@ packageRouter.get("/getPackages", async (req: Request, res: Response) => {
   }
 });
 
-packageRouter.post("/addPackage", async (req: Request, res: Response) => {
-  const packageData: Package = req.body;
+connectionRouter.post("/addConnection", async (req: Request, res: Response) => {
+  const connectionData: Connection = req.body;
   try {
     const connection = await getConnection();
 
     try {
-      const insertedPackage = await createPackage(connection, packageData);
-      console.log("package", insertedPackage);
-      return res.status(200).json(insertedPackage);
+      const insertedConnection = await createConnection(connection, connectionData);
+      console.log("connection", insertedConnection);
+      return res.status(200).json(insertedConnection);
     } catch (error) {
       console.error('Error executing query:', error);
     } finally {
@@ -48,4 +48,4 @@ packageRouter.post("/addPackage", async (req: Request, res: Response) => {
   }
 });
 
-export default packageRouter;
+export default connectionRouter;

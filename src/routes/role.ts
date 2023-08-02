@@ -37,9 +37,9 @@ roleRouter.post("/addRole", async (req: Request, res: Response) => {
   const roleData: Role = req.body;
   try {
     const connection = await getConnection();
-    const insertId = await createRole(connection, roleData);
-    console.log("Created role with ID:", insertId);
-    return res.status(200).json({ id: insertId, message: "Role created successfully" });
+    const insertRole = await createRole(connection, roleData);
+    console.log("Created role with ID:", insertRole);
+    return res.status(200).json(insertRole);
   } catch (error) {
     console.error('Error executing query:', error);
     return res.status(500).send('Internal server error');

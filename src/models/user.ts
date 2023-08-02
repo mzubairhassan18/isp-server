@@ -46,6 +46,26 @@ export async function getUser(connection: mysql.PoolConnection, username: string
   return [];
 }
 
+export async function getUserById(connection: mysql.PoolConnection, id: string): Promise<User | null> {
+  const [rows] = await connection.query('SELECT * FROM system_users where id = ?', [id]);
+  if (Array.isArray(rows)) {
+
+    const user: User[] = rows.map((row: any) => ({
+      id: row.id,
+      username: row.username,
+      full_name: row.full_name,
+      password: row.password,
+      roleId: row.role_id,
+      email: row.email,
+      phone: row.phone,
+      address: row.address,
+      cnic: row.cnic,
+    }));
+    return user[0];
+  }
+  return null;
+}
+
 export async function createUser(connection: mysql.PoolConnection, user: User): Promise<User> {
   console.log(user.roleId,);
   const uniqueId = uuidv4();
