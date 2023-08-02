@@ -26,11 +26,6 @@ app.use("/api/package", packageRouter)
 app.use("/api/role", roleRouter)
 app.use("/api/account" , accountRouter)
 
-// Sample user data (you can replace this with your database)
-
-
-
-
 
 // Start the server
 app.listen(port, () => {
